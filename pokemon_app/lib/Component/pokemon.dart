@@ -6,6 +6,7 @@ class Pokemon {
   String type1;
   String type2;
   int id;
+  List types = [];
   Map<String, Color> colorMap = {
     'bug': Color.fromRGBO(168, 184, 32, 1),
     'dark': Color.fromRGBO(112, 88, 72, 1),
@@ -31,7 +32,12 @@ class Pokemon {
     name = map['name'];
     urlImage = map['sprites']['other']['official-artwork']['front_default'];
     id = map['id'];
-    type1 = map['types'][0]['type']['name'];
-    print(map['types'][1]['type']['name']);
+    // types = map['types'];
+    if (map['types'].length == 2) {
+      type1 = map['types'][0]['type']['name'];
+      type2 = map['types'][1]['type']['name'];
+    } else {
+      type1 = map['types'][0]['type']['name'];
+    }
   }
 }

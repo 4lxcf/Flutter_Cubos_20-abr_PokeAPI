@@ -17,7 +17,6 @@ class PokeView extends StatefulWidget {
 
 class _PokeViewState extends State<PokeView> {
   final controller = PokeController();
-  Color appBarColor;
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +42,10 @@ class _PokeViewState extends State<PokeView> {
           children: [
             FutureBuilder<Pokemon>(
               future: controller.pokemon,
-              builder: (ctx, snapshot) {
+              builder: (_, snapshot) {
                 if (snapshot.connectionState != ConnectionState.done) {
                   return CircularProgressIndicator();
-                }
-                if (snapshot.hasData) {
+                } else if (snapshot.hasData) {
                   return Column(
                     children: [
                       Row(
@@ -74,8 +72,8 @@ class _PokeViewState extends State<PokeView> {
                           ),
                           Image.network(
                             snapshot.data.urlImage,
-                            height: 200,
-                            width: 200,
+                            height: 220,
+                            width: 220,
                             fit: BoxFit.cover,
                           ),
                           ElevatedButton(
@@ -83,7 +81,6 @@ class _PokeViewState extends State<PokeView> {
                             onPressed: () {
                               setState(() {
                                 controller.nextPokemon();
-                                print(snapshot.data.type2);
                               });
                             },
                             style: ButtonStyle(
@@ -104,7 +101,7 @@ class _PokeViewState extends State<PokeView> {
                         margin: EdgeInsets.all(10.0),
                         child: Text(
                           '#${snapshot.data.id} ' +
-                              ' ${snapshot.data.name.toUpperCase()}',
+                              ' ${snapshot.data.name.capitalize()}',
                           style: TextStyle(
                             fontSize: 18,
                             letterSpacing: 2.0,
@@ -125,31 +122,33 @@ class _PokeViewState extends State<PokeView> {
                             ),
                             margin: EdgeInsets.all(5.0),
                             child: Text(
-                              '${snapshot.data.type1.capitalize()}',
+                              '${snapshot.data.type1}',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          // Container(
-                          //   alignment: Alignment.center,
-                          //   height: 25.0,
-                          //   width: 58.0,
-                          //   decoration: BoxDecoration(
-                          //     color: snapshot
-                          //         .data.colorMap['${snapshot.data.type2}'],
-                          //     borderRadius: BorderRadius.circular(8.0),
-                          //   ),
-                          //   margin: EdgeInsets.all(5.0),
-                          //   child: Text(
-                          //     '${snapshot.data.type2.capitalize()}',
-                          //     style: TextStyle(
-                          //       color: Colors.white,
-                          //       fontWeight: FontWeight.bold,
-                          //     ),
-                          //   ),
-                          // )
+                          snapshot.data.type2 != null
+                              ? Container(
+                                  alignment: Alignment.center,
+                                  height: 25.0,
+                                  width: 58.0,
+                                  decoration: BoxDecoration(
+                                    color: snapshot.data
+                                        .colorMap['${snapshot.data.type2}'],
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  margin: EdgeInsets.all(5.0),
+                                  child: Text(
+                                    '${snapshot.data.type2}',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                )
+                              : Container()
                         ],
                       ),
                     ],
@@ -162,6 +161,8 @@ class _PokeViewState extends State<PokeView> {
                       color: Colors.red,
                     ),
                   );
+                } else {
+                  return Container();
                 }
               },
             ),
