@@ -9,6 +9,13 @@ class Pokemon {
   int height;
   int weight;
   int id;
+  int hpStat;
+  int atkStat;
+  int defStat;
+  int spaStat;
+  int spdStat;
+  int speStat;
+
   Map<String, Color> colorMap = {
     'bug': Color.fromRGBO(168, 184, 32, 1),
     'dark': Color.fromRGBO(112, 88, 72, 1),
@@ -37,6 +44,12 @@ class Pokemon {
     height = map['height'];
     weight = map['weight'];
     exp = map['base_experience'];
+    hpStat = map['stats'][0]['base_stat'];
+    atkStat = map['stats'][1]['base_stat'];
+    defStat = map['stats'][2]['base_stat'];
+    spaStat = map['stats'][3]['base_stat'];
+    spdStat = map['stats'][4]['base_stat'];
+    speStat = map['stats'][5]['base_stat'];
     if (map['types'].length == 2) {
       type1 = map['types'][0]['type']['name'];
       type2 = map['types'][1]['type']['name'];

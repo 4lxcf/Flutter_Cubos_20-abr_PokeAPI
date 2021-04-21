@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:pokemon_app/Component/pokemon.dart';
+import 'package:pokemon_app/Components/pokemon.dart';
 
 class API {
   Future<Pokemon> fetchPokemon(int number) async {

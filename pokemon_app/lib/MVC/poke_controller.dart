@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:pokemon_app/Component/pokemon.dart';
+import 'package:pokemon_app/Components/pokemon.dart';
 import 'package:pokemon_app/MVC/poke_model.dart';
 
 class PokeController {
