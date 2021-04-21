@@ -17,6 +17,7 @@ class PokeView extends StatefulWidget {
 
 class _PokeViewState extends State<PokeView> {
   final controller = PokeController();
+  Color appBarColor;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,6 @@ class _PokeViewState extends State<PokeView> {
                   return Column(
                     children: [
                       Row(
-                        //mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           ElevatedButton(
@@ -83,6 +83,7 @@ class _PokeViewState extends State<PokeView> {
                             onPressed: () {
                               setState(() {
                                 controller.nextPokemon();
+                                print(snapshot.data.type2);
                               });
                             },
                             style: ButtonStyle(
@@ -131,21 +132,24 @@ class _PokeViewState extends State<PokeView> {
                               ),
                             ),
                           ),
-                          snapshot.data.type2 != null
-                              ? Container(
-                                  alignment: Alignment.center,
-                                  height: 25.0,
-                                  width: 58.0,
-                                  decoration: BoxDecoration(
-                                    color: snapshot.data
-                                        .colorMap['${snapshot.data.type2}'],
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  margin: EdgeInsets.all(5.0),
-                                  child: Text(
-                                      '${snapshot.data.type2.capitalize()}'),
-                                )
-                              : Container(),
+                          // Container(
+                          //   alignment: Alignment.center,
+                          //   height: 25.0,
+                          //   width: 58.0,
+                          //   decoration: BoxDecoration(
+                          //     color: snapshot
+                          //         .data.colorMap['${snapshot.data.type2}'],
+                          //     borderRadius: BorderRadius.circular(8.0),
+                          //   ),
+                          //   margin: EdgeInsets.all(5.0),
+                          //   child: Text(
+                          //     '${snapshot.data.type2.capitalize()}',
+                          //     style: TextStyle(
+                          //       color: Colors.white,
+                          //       fontWeight: FontWeight.bold,
+                          //     ),
+                          //   ),
+                          // )
                         ],
                       ),
                     ],
