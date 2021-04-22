@@ -41,7 +41,7 @@ class StatsChart extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 12.0,
                       fontWeight: FontWeight.w500,
-                      color: Colors.black,
+                      color: Colors.white,
                     ),
                   ),
                 ),
