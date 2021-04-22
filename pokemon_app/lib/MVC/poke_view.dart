@@ -30,6 +30,7 @@ class _PokeViewState extends State<PokeView> {
         color: Color.fromRGBO(0, 245, 255, 1),
         alignment: Alignment.center,
         child: Stack(
+          clipBehavior: Clip.none,
           alignment: Alignment.center,
           children: [
             Container(
@@ -44,8 +45,8 @@ class _PokeViewState extends State<PokeView> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.02,
-              width: MediaQuery.of(context).size.width * 0.72,
+              top: 20.0,
+              left: 10.0,
               child: Container(
                 alignment: Alignment.center,
                 child: FutureBuilder<Pokemon>(
@@ -56,14 +57,89 @@ class _PokeViewState extends State<PokeView> {
                     } else if (snapshot.hasData) {
                       return Container(
                         margin: EdgeInsets.all(1.0),
-                        child: Text(
-                          '#${snapshot.data.id} ' +
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '# ${snapshot.data.id}',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 12.0),
+                            Text(
                               ' ${snapshot.data.name.capitalize()}',
-                          style: TextStyle(
-                            fontSize: 20,
-                            letterSpacing: 1.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                              style: TextStyle(
+                                fontSize: 26,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 20.0),
+                            Row(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.all(5.0),
+                                  alignment: Alignment.center,
+                                  height: 25.0,
+                                  width: 58.0,
+                                  decoration: BoxDecoration(
+                                    color: snapshot.data
+                                        .colorMap['${snapshot.data.type1}'],
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.6),
+                                        blurRadius: 5.0,
+                                        spreadRadius: 1.0,
+                                        offset: Offset(2.0, 2.0),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Text(
+                                    '${snapshot.data.type1}'.toUpperCase(),
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 11,
+                                    ),
+                                  ),
+                                ),
+                                snapshot.data.type2 != null
+                                    ? Container(
+                                        margin: EdgeInsets.all(5.0),
+                                        alignment: Alignment.center,
+                                        height: 25.0,
+                                        width: 58.0,
+                                        decoration: BoxDecoration(
+                                          color: snapshot.data.colorMap[
+                                              '${snapshot.data.type2}'],
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.grey.withOpacity(0.6),
+                                              blurRadius: 5.0,
+                                              spreadRadius: 1.0,
+                                              offset: Offset(2.0, 2.0),
+                                            ),
+                                          ],
+                                        ),
+                                        child: Text(
+                                          '${snapshot.data.type2}'
+                                              .toUpperCase(),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 11,
+                                          ),
+                                        ),
+                                      )
+                                    : Container(),
+                              ],
+                            ),
+                          ],
                         ),
                       );
                     } else {
@@ -74,243 +150,232 @@ class _PokeViewState extends State<PokeView> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.07,
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    children: [
-                      Container(
-                        alignment: Alignment.center,
-                        child: FutureBuilder<Pokemon>(
-                          future: controller.pokemon,
-                          builder: (_, snapshot) {
-                            if (snapshot.connectionState !=
-                                ConnectionState.done) {
-                              return Container();
-                            } else if (snapshot.hasData) {
-                              return Container(
-                                margin: EdgeInsets.all(1.0),
-                                child: Image.network(
-                                  snapshot.data.urlImage,
-                                  height: 160,
-                                  width: 160,
-                                  fit: BoxFit.cover,
-                                ),
-                              );
-                            } else {
-                              return Container();
-                            }
-                          },
-                        ),
+              top: -63.0,
+              left: 190.0,
+              child: FutureBuilder<Pokemon>(
+                future: controller.pokemon,
+                builder: (_, snapshot) {
+                  if (snapshot.connectionState != ConnectionState.done) {
+                    return Container();
+                  } else if (snapshot.hasData) {
+                    return Container(
+                      margin: EdgeInsets.all(1.0),
+                      child: Image.network(
+                        snapshot.data.urlImage,
+                        height: 200,
+                        width: 200,
+                        fit: BoxFit.cover,
                       ),
-                      Container(
-                        alignment: Alignment.center,
-                        child: FutureBuilder<Pokemon>(
-                          future: controller.pokemon,
-                          builder: (_, snapshot) {
-                            if (snapshot.connectionState !=
-                                ConnectionState.done) {
-                              return Container();
-                            } else if (snapshot.hasData) {
-                              return Row(
-                                children: [
-                                  Container(
-                                    alignment: Alignment.center,
-                                    height: 25.0,
-                                    width: 58.0,
-                                    decoration: BoxDecoration(
-                                      color: snapshot.data
-                                          .colorMap['${snapshot.data.type1}'],
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey.withOpacity(0.6),
-                                            blurRadius:
-                                                5.0, // soften the shadow
-                                            spreadRadius:
-                                                1.0, //extend the shadow
-                                            offset: Offset(
-                                              2.0,
-                                              2.0,
-                                            )),
-                                      ],
-                                    ),
-                                    margin: EdgeInsets.all(2.0),
-                                    child: Text(
-                                      '${snapshot.data.type1}'.toUpperCase(),
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 11,
-                                      ),
-                                    ),
-                                  ),
-                                  snapshot.data.type2 != null
-                                      ? Container(
-                                          alignment: Alignment.center,
-                                          height: 25.0,
-                                          width: 58.0,
-                                          decoration: BoxDecoration(
-                                            color: snapshot.data.colorMap[
-                                                '${snapshot.data.type2}'],
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  color: Colors.grey
-                                                      .withOpacity(0.6),
-                                                  blurRadius: 5.0,
-                                                  spreadRadius: 1.0,
-                                                  offset: Offset(
-                                                    2.0,
-                                                    2.0,
-                                                  )),
-                                            ],
-                                          ),
-                                          margin: EdgeInsets.all(5.0),
-                                          child: Text(
-                                            '${snapshot.data.type2}'
-                                                .toUpperCase(),
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 11,
-                                            ),
-                                          ),
-                                        )
-                                      : Container(),
-                                ],
-                              );
-                            } else {
-                              return Container();
-                            }
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.27,
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Card(
-                          child: FutureBuilder<Pokemon>(
-                            future: controller.pokemon,
-                            builder: (_, snapshot) {
-                              if (snapshot.connectionState !=
-                                  ConnectionState.done) {
-                                return Container();
-                              } else if (snapshot.hasData) {
-                                return Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.05,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.4,
-                                  alignment: Alignment.centerLeft,
-                                  padding: EdgeInsets.only(left: 5.0),
-                                  decoration: BoxDecoration(
-                                    color: snapshot.data
-                                        .colorMap['${snapshot.data.type1}'],
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  child: Text(
-                                    'Height:     ${snapshot.data.height / 10}  m',
-                                    style: TextStyle(
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                );
-                              } else {
-                                return Container();
-                              }
-                            },
-                          ),
-                        ),
-                        Card(
-                          child: FutureBuilder<Pokemon>(
-                            future: controller.pokemon,
-                            builder: (_, snapshot) {
-                              if (snapshot.connectionState !=
-                                  ConnectionState.done) {
-                                return Container();
-                              } else if (snapshot.hasData) {
-                                return Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.05,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.4,
-                                  alignment: Alignment.centerLeft,
-                                  padding: EdgeInsets.only(left: 5.0),
-                                  decoration: BoxDecoration(
-                                    color: snapshot.data
-                                        .colorMap['${snapshot.data.type1}'],
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  child: Text(
-                                    'Weight:     ${snapshot.data.weight / 10}  kg',
-                                    style: TextStyle(
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                );
-                              } else {
-                                return Container();
-                              }
-                            },
-                          ),
-                        ),
-                        Card(
-                          child: FutureBuilder<Pokemon>(
-                            future: controller.pokemon,
-                            builder: (_, snapshot) {
-                              if (snapshot.connectionState !=
-                                  ConnectionState.done) {
-                                return Container();
-                              } else if (snapshot.hasData) {
-                                return Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.05,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.4,
-                                  alignment: Alignment.centerLeft,
-                                  padding: EdgeInsets.only(left: 5.0),
-                                  decoration: BoxDecoration(
-                                    color: snapshot.data
-                                        .colorMap['${snapshot.data.type1}'],
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  child: Text(
-                                    'Base exp.:     ${snapshot.data.exp}',
-                                    style: TextStyle(
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                );
-                              } else {
-                                return Container();
-                              }
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
               ),
+
+              // Container(
+              //   alignment: Alignment.center,
+              //   child: FutureBuilder<Pokemon>(
+              //     future: controller.pokemon,
+              //     builder: (_, snapshot) {
+              //       if (snapshot.connectionState !=
+              //           ConnectionState.done) {
+              //         return Container();
+              //       } else if (snapshot.hasData) {
+              //         return Row(
+              //           children: [
+              //             Container(
+              //               alignment: Alignment.center,
+              //               height: 25.0,
+              //               width: 58.0,
+              //               decoration: BoxDecoration(
+              //                 color: snapshot.data
+              //                     .colorMap['${snapshot.data.type1}'],
+              //                 borderRadius: BorderRadius.circular(8.0),
+              //                 boxShadow: [
+              //                   BoxShadow(
+              //                       color: Colors.grey.withOpacity(0.6),
+              //                       blurRadius:
+              //                           5.0, // soften the shadow
+              //                       spreadRadius:
+              //                           1.0, //extend the shadow
+              //                       offset: Offset(
+              //                         2.0,
+              //                         2.0,
+              //                       )),
+              //                 ],
+              //               ),
+              //               margin: EdgeInsets.all(2.0),
+              //               child: Text(
+              //                 '${snapshot.data.type1}'.toUpperCase(),
+              //                 style: TextStyle(
+              //                   color: Colors.white,
+              //                   fontWeight: FontWeight.bold,
+              //                   fontSize: 11,
+              //                 ),
+              //               ),
+              //             ),
+              //             snapshot.data.type2 != null
+              //                 ? Container(
+              //                     alignment: Alignment.center,
+              //                     height: 25.0,
+              //                     width: 58.0,
+              //                     decoration: BoxDecoration(
+              //                       color: snapshot.data.colorMap[
+              //                           '${snapshot.data.type2}'],
+              //                       borderRadius:
+              //                           BorderRadius.circular(8.0),
+              //                       boxShadow: [
+              //                         BoxShadow(
+              //                             color: Colors.grey
+              //                                 .withOpacity(0.6),
+              //                             blurRadius: 5.0,
+              //                             spreadRadius: 1.0,
+              //                             offset: Offset(
+              //                               2.0,
+              //                               2.0,
+              //                             )),
+              //                       ],
+              //                     ),
+              //                     margin: EdgeInsets.all(5.0),
+              //                     child: Text(
+              //                       '${snapshot.data.type2}'
+              //                           .toUpperCase(),
+              //                       style: TextStyle(
+              //                         color: Colors.white,
+              //                         fontWeight: FontWeight.bold,
+              //                         fontSize: 11,
+              //                       ),
+              //                     ),
+              //                   )
+              //                 : Container(),
+              //           ],
+              //         );
+              //       } else {
+              //         return Container();
+              //       }
+              //     },
+              //   ),
+              // ),
+
+              // Container(
+              //   height: MediaQuery.of(context).size.height * 0.27,
+              //   width: MediaQuery.of(context).size.width * 0.4,
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(10.0),
+              //   ),
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       Card(
+              //         child: FutureBuilder<Pokemon>(
+              //           future: controller.pokemon,
+              //           builder: (_, snapshot) {
+              //             if (snapshot.connectionState !=
+              //                 ConnectionState.done) {
+              //               return Container();
+              //             } else if (snapshot.hasData) {
+              //               return Container(
+              //                 height:
+              //                     MediaQuery.of(context).size.height * 0.05,
+              //                 width:
+              //                     MediaQuery.of(context).size.width * 0.4,
+              //                 alignment: Alignment.centerLeft,
+              //                 padding: EdgeInsets.only(left: 5.0),
+              //                 decoration: BoxDecoration(
+              //                   color: snapshot.data
+              //                       .colorMap['${snapshot.data.type1}'],
+              //                   borderRadius: BorderRadius.circular(8.0),
+              //                 ),
+              //                 child: Text(
+              //                   'Height:     ${snapshot.data.height / 10}  m',
+              //                   style: TextStyle(
+              //                     fontSize: 14.0,
+              //                     fontWeight: FontWeight.bold,
+              //                     color: Colors.white,
+              //                   ),
+              //                 ),
+              //               );
+              //             } else {
+              //               return Container();
+              //             }
+              //           },
+              //         ),
+              //       ),
+              //       Card(
+              //         child: FutureBuilder<Pokemon>(
+              //           future: controller.pokemon,
+              //           builder: (_, snapshot) {
+              //             if (snapshot.connectionState !=
+              //                 ConnectionState.done) {
+              //               return Container();
+              //             } else if (snapshot.hasData) {
+              //               return Container(
+              //                 height:
+              //                     MediaQuery.of(context).size.height * 0.05,
+              //                 width:
+              //                     MediaQuery.of(context).size.width * 0.4,
+              //                 alignment: Alignment.centerLeft,
+              //                 padding: EdgeInsets.only(left: 5.0),
+              //                 decoration: BoxDecoration(
+              //                   color: snapshot.data
+              //                       .colorMap['${snapshot.data.type1}'],
+              //                   borderRadius: BorderRadius.circular(8.0),
+              //                 ),
+              //                 child: Text(
+              //                   'Weight:     ${snapshot.data.weight / 10}  kg',
+              //                   style: TextStyle(
+              //                     fontSize: 14.0,
+              //                     fontWeight: FontWeight.bold,
+              //                     color: Colors.white,
+              //                   ),
+              //                 ),
+              //               );
+              //             } else {
+              //               return Container();
+              //             }
+              //           },
+              //         ),
+              //       ),
+              //       Card(
+              //         child: FutureBuilder<Pokemon>(
+              //           future: controller.pokemon,
+              //           builder: (_, snapshot) {
+              //             if (snapshot.connectionState !=
+              //                 ConnectionState.done) {
+              //               return Container();
+              //             } else if (snapshot.hasData) {
+              //               return Container(
+              //                 height:
+              //                     MediaQuery.of(context).size.height * 0.05,
+              //                 width:
+              //                     MediaQuery.of(context).size.width * 0.4,
+              //                 alignment: Alignment.centerLeft,
+              //                 padding: EdgeInsets.only(left: 5.0),
+              //                 decoration: BoxDecoration(
+              //                   color: snapshot.data
+              //                       .colorMap['${snapshot.data.type1}'],
+              //                   borderRadius: BorderRadius.circular(8.0),
+              //                 ),
+              //                 child: Text(
+              //                   'Base exp.:     ${snapshot.data.exp}',
+              //                   style: TextStyle(
+              //                     fontSize: 14.0,
+              //                     fontWeight: FontWeight.bold,
+              //                     color: Colors.white,
+              //                   ),
+              //                 ),
+              //               );
+              //             } else {
+              //               return Container();
+              //             }
+              //           },
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ),
             Positioned(
               top: MediaQuery.of(context).size.height * 0.38,
