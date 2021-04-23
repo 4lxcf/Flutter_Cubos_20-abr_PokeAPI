@@ -19,14 +19,6 @@ class StatsChart extends StatelessWidget {
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: [
-              // Container(
-              //   decoration: BoxDecoration(
-              //       border: Border.all(
-              //         color: Colors.grey,
-              //         width: 1.0,
-              //       ),
-              //       borderRadius: BorderRadius.circular(8.0)),
-              // ),
               FractionallySizedBox(
                 heightFactor: percentage,
                 child: Container(
@@ -34,15 +26,7 @@ class StatsChart extends StatelessWidget {
                   width: 30,
                   decoration: BoxDecoration(
                     color: color,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Text(
-                    '$value',
-                    style: TextStyle(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                    ),
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
                 ),
               ),
