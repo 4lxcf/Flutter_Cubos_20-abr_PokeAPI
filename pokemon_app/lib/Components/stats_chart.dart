@@ -27,6 +27,18 @@ class StatsChart extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: color,
                     borderRadius: BorderRadius.circular(5.0),
+                    border: Border.all(
+                      width: 1,
+                      color: Colors.white.withOpacity(0.2),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 6.0,
+                        spreadRadius: 1.5,
+                        offset: Offset(2, 2),
+                        color: Colors.black.withOpacity(0.3),
+                      ),
+                    ],
                   ),
                 ),
               ),
