@@ -16,6 +16,7 @@ class Pokemon {
   int spdStat;
   int speStat;
   List<Ability> abilities;
+  List<Stats> baseStatList;
   String hiddenAbility;
 
   Map<String, Color> colorMap = {
@@ -57,9 +58,11 @@ class Pokemon {
     abilities = arrayAbilities.map((item) {
       return Ability.fromJson(item['ability']);
     }).toList();
-    hiddenAbility = arrayAbilities.where((item) {
-      return item['is_hidden'];
-    }).toString();
+
+    var arrayStats = json['stats'] as List;
+    baseStatList = arrayStats.map((item) {
+      return Stats.fromJson(item['base_stat']);
+    }).toList();
 
     if (json['types'].length == 2) {
       type1 = json['types'][0]['type']['name'];
@@ -77,5 +80,15 @@ class Ability {
   Ability.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     url = json['url'];
+  }
+}
+
+class Stats {
+  int baseStat;
+  int effort;
+
+  Stats.fromJson(Map<String, dynamic> json) {
+    baseStat = json['base_stat'];
+    effort = json['effort'];
   }
 }
