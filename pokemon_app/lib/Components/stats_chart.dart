@@ -28,8 +28,8 @@ class StatsChart extends StatelessWidget {
                     color: color,
                     borderRadius: BorderRadius.circular(5.0),
                     border: Border.all(
-                      width: 1,
-                      color: Colors.white.withOpacity(0.2),
+                      width: 1.5,
+                      color: Colors.white.withOpacity(0.3),
                     ),
                     boxShadow: [
                       BoxShadow(
@@ -49,7 +49,7 @@ class StatsChart extends StatelessWidget {
           label,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 14,
+            fontSize: 12,
           ),
         ),
       ],

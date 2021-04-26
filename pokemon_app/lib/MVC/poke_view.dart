@@ -60,9 +60,9 @@ class _PokeViewState extends State<PokeView> {
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          blurRadius: 30,
-                          spreadRadius: 10,
-                          color: Colors.black.withOpacity(0.25),
+                          blurRadius: 20,
+                          spreadRadius: 5,
+                          color: Colors.black.withOpacity(0.4),
                         ),
                       ],
                     ),
@@ -78,7 +78,7 @@ class _PokeViewState extends State<PokeView> {
                           width: MediaQuery.of(context).size.width * 0.90,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
-                            color: Colors.white.withOpacity(0.7),
+                            color: Colors.white.withOpacity(1),
                             border: Border.all(
                               width: 2,
                               color: Colors.white.withOpacity(0.3),
@@ -123,6 +123,10 @@ class _PokeViewState extends State<PokeView> {
                                   color: snapshot
                                       .data.colorMap['${snapshot.data.type1}'],
                                   borderRadius: BorderRadius.circular(8.0),
+                                  border: Border.all(
+                                    width: 1.5,
+                                    color: Colors.white.withOpacity(0.3),
+                                  ),
                                   boxShadow: [
                                     BoxShadow(
                                       color: Colors.grey.withOpacity(0.6),
@@ -152,6 +156,10 @@ class _PokeViewState extends State<PokeView> {
                                             .colorMap['${snapshot.data.type2}'],
                                         borderRadius:
                                             BorderRadius.circular(8.0),
+                                        border: Border.all(
+                                          width: 1.5,
+                                          color: Colors.white.withOpacity(0.3),
+                                        ),
                                         boxShadow: [
                                           BoxShadow(
                                             color: Colors.grey.withOpacity(0.6),
@@ -269,7 +277,7 @@ class _PokeViewState extends State<PokeView> {
                     ),
                   ),
                   Positioned(
-                    top: 265,
+                    top: 245,
                     width: MediaQuery.of(context).size.width * 0.90,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -286,7 +294,7 @@ class _PokeViewState extends State<PokeView> {
                               child: Text(
                                 'STATS',
                                 style: TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                   color: activeButton == 'stats'
                                       ? Colors.white
@@ -315,7 +323,7 @@ class _PokeViewState extends State<PokeView> {
                               child: Text(
                                 'MOVES',
                                 style: TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                   color: activeButton == 'evolutions'
                                       ? Colors.white
@@ -344,7 +352,7 @@ class _PokeViewState extends State<PokeView> {
                               child: Text(
                                 'ABILITES ',
                                 style: TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                   color: activeButton == 'abilities'
                                       ? Colors.white
@@ -370,7 +378,7 @@ class _PokeViewState extends State<PokeView> {
                     ),
                   ),
                   Positioned(
-                    top: MediaQuery.of(context).size.height * 0.45,
+                    top: 285.0,
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.35,
                       width: MediaQuery.of(context).size.width * 0.75,
@@ -427,14 +435,14 @@ class _PokeViewState extends State<PokeView> {
                           } else if (activeButton == 'abilities') {
                             return Container(
                               height: 100,
-                              width: 100,
+                              width: 60,
+                              margin: EdgeInsets.only(top: 10.0),
                               child: ListView.builder(
-                                padding: EdgeInsets.symmetric(vertical: 15.0),
+                                padding: EdgeInsets.symmetric(vertical: 10.0),
                                 itemCount: snapshot.data.abilities.length,
                                 itemBuilder: (ctx, index) {
                                   return Card(
-                                    margin:
-                                        EdgeInsets.symmetric(vertical: 10.0),
+                                    margin: EdgeInsets.symmetric(vertical: 7.0),
                                     child: Container(
                                       padding: EdgeInsets.all(10.0),
                                       decoration: BoxDecoration(
@@ -456,8 +464,11 @@ class _PokeViewState extends State<PokeView> {
                                         snapshot.data.abilities[index].name
                                             .capitalize(),
                                         style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 11,
+                                          letterSpacing: 1.5,
+                                        ),
                                       ),
                                     ),
                                   );
