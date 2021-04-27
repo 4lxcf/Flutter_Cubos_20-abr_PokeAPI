@@ -5,19 +5,14 @@ class Pokemon {
   String urlImage;
   String type1;
   String type2;
+  String hiddenAbility;
   int exp;
   int height;
   int weight;
   int id;
-  int hpStat;
-  int atkStat;
-  int defStat;
-  int spaStat;
-  int spdStat;
-  int speStat;
-  List<Ability> abilities;
-  List<Stats> baseStatList;
-  String hiddenAbility;
+  List<Ability> abilityList;
+  List<Stat> statNameList;
+  List<int> baseStatList = [];
 
   Map<String, Color> colorMap = {
     'bug': Color.fromRGBO(168, 184, 32, 1),
@@ -47,22 +42,20 @@ class Pokemon {
     height = json['height'];
     weight = json['weight'];
     exp = json['base_experience'];
-    hpStat = json['stats'][0]['base_stat'];
-    atkStat = json['stats'][1]['base_stat'];
-    defStat = json['stats'][2]['base_stat'];
-    spaStat = json['stats'][3]['base_stat'];
-    spdStat = json['stats'][4]['base_stat'];
-    speStat = json['stats'][5]['base_stat'];
 
     var arrayAbilities = json['abilities'] as List;
-    abilities = arrayAbilities.map((item) {
+    abilityList = arrayAbilities.map((item) {
       return Ability.fromJson(item['ability']);
     }).toList();
 
-    var arrayStats = json['stats'] as List;
-    baseStatList = arrayStats.map((item) {
-      return Stats.fromJson(item['base_stat']);
+    var arrayStat = json['stats'] as List;
+    statNameList = arrayStat.map((item) {
+      return Stat.fromJson(item['stat']);
     }).toList();
+
+    for (int i = 0; i < arrayStat.length; i++) {
+      baseStatList.add(json['stats'][i]['base_stat']);
+    }
 
     if (json['types'].length == 2) {
       type1 = json['types'][0]['type']['name'];
@@ -83,12 +76,12 @@ class Ability {
   }
 }
 
-class Stats {
-  int baseStat;
-  int effort;
+class Stat {
+  String name;
+  String url;
 
-  Stats.fromJson(Map<String, dynamic> json) {
-    baseStat = json['base_stat'];
-    effort = json['effort'];
+  Stat.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    url = json['url'];
   }
 }

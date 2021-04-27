@@ -15,7 +15,7 @@ class StatsChart extends StatelessWidget {
         Container(
           height: 150,
           width: 30,
-          margin: EdgeInsets.all(5.0),
+          margin: EdgeInsets.symmetric(horizontal: 10.0),
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: [
@@ -23,6 +23,7 @@ class StatsChart extends StatelessWidget {
                 heightFactor: percentage,
                 child: Container(
                   alignment: Alignment.topCenter,
+                  margin: EdgeInsets.only(bottom: 5.0),
                   width: 30,
                   decoration: BoxDecoration(
                     color: color,

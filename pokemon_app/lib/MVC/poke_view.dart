@@ -350,7 +350,7 @@ class _PokeViewState extends State<PokeView> {
                                 });
                               },
                               child: Text(
-                                'ABILITES ',
+                                'ABILITIES ',
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
@@ -379,101 +379,76 @@ class _PokeViewState extends State<PokeView> {
                   ),
                   Positioned(
                     top: 285.0,
+                    left: MediaQuery.of(context).size.width * 0.1,
                     child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
                       height: MediaQuery.of(context).size.height * 0.35,
                       width: MediaQuery.of(context).size.width * 0.75,
                       child: Builder(
                         builder: (context) {
                           if (activeButton == 'stats') {
-                            return Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  StatsChart(
-                                    label: 'HP',
-                                    value: snapshot.data.hpStat,
-                                    percentage: snapshot.data.hpStat / 255,
-                                    color: snapshot.data
-                                        .colorMap['${snapshot.data.type1}'],
-                                  ),
-                                  StatsChart(
-                                    label: 'ATK',
-                                    value: snapshot.data.atkStat,
-                                    percentage: snapshot.data.atkStat / 190,
-                                    color: snapshot.data
-                                        .colorMap['${snapshot.data.type1}'],
-                                  ),
-                                  StatsChart(
-                                    label: 'DEF',
-                                    value: snapshot.data.defStat,
-                                    percentage: snapshot.data.defStat / 250,
-                                    color: snapshot.data
-                                        .colorMap['${snapshot.data.type1}'],
-                                  ),
-                                  StatsChart(
-                                    label: 'SPA',
-                                    value: snapshot.data.spaStat,
-                                    percentage: snapshot.data.spaStat / 194,
-                                    color: snapshot.data
-                                        .colorMap['${snapshot.data.type1}'],
-                                  ),
-                                  StatsChart(
-                                    label: 'SPD',
-                                    value: snapshot.data.spdStat,
-                                    percentage: snapshot.data.spdStat / 250,
-                                    color: snapshot.data
-                                        .colorMap['${snapshot.data.type1}'],
-                                  ),
-                                  StatsChart(
-                                    label: 'SPE',
-                                    value: snapshot.data.speStat,
-                                    percentage: snapshot.data.speStat / 200,
-                                    color: snapshot.data
-                                        .colorMap['${snapshot.data.type1}'],
-                                  ),
-                                ]);
+                            return ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: snapshot.data.statNameList.length,
+                              itemBuilder: (ctx, index) {
+                                Map<String, String> showedNames = {
+                                  'hp': 'HP',
+                                  'attack': 'ATK',
+                                  'defense': 'DEF',
+                                  'special-attack': 'SPA',
+                                  'special-defense': 'SPD',
+                                  'speed': 'SPE',
+                                };
+
+                                return StatsChart(
+                                  label: showedNames[
+                                      snapshot.data.statNameList[index].name],
+                                  value: snapshot.data.baseStatList[index],
+                                  percentage:
+                                      snapshot.data.baseStatList[index] / 255,
+                                  color: snapshot
+                                      .data.colorMap['${snapshot.data.type1}'],
+                                );
+                              },
+                            );
                           } else if (activeButton == 'abilities') {
-                            return Container(
-                              height: 100,
-                              width: 60,
-                              margin: EdgeInsets.only(top: 10.0),
-                              child: ListView.builder(
-                                padding: EdgeInsets.symmetric(vertical: 10.0),
-                                itemCount: snapshot.data.abilities.length,
-                                itemBuilder: (ctx, index) {
-                                  return Card(
-                                    margin: EdgeInsets.symmetric(vertical: 7.0),
-                                    child: Container(
-                                      padding: EdgeInsets.all(10.0),
-                                      decoration: BoxDecoration(
-                                        color: snapshot.data
-                                            .colorMap['${snapshot.data.type1}']
-                                            .withOpacity(0.9),
-                                        borderRadius:
-                                            BorderRadius.circular(3.0),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            blurRadius: 6,
-                                            spreadRadius: 3,
-                                            color:
-                                                Colors.black.withOpacity(0.1),
-                                          ),
-                                        ],
-                                      ),
-                                      child: Text(
-                                        snapshot.data.abilities[index].name
-                                            .capitalize(),
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 11,
-                                          letterSpacing: 1.5,
+                            return ListView.builder(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 10.0,
+                                horizontal: 20.0,
+                              ),
+                              itemCount: snapshot.data.abilityList.length,
+                              itemBuilder: (ctx, index) {
+                                return Card(
+                                  margin: EdgeInsets.symmetric(vertical: 8.0),
+                                  child: Container(
+                                    padding: EdgeInsets.all(8.0),
+                                    decoration: BoxDecoration(
+                                      color: snapshot.data
+                                          .colorMap['${snapshot.data.type1}']
+                                          .withOpacity(0.9),
+                                      borderRadius: BorderRadius.circular(3.0),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 6,
+                                          spreadRadius: 3,
+                                          color: Colors.black.withOpacity(0.1),
                                         ),
+                                      ],
+                                    ),
+                                    child: Text(
+                                      snapshot.data.abilityList[index].name
+                                          .capitalize(),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 11,
+                                        letterSpacing: 1.5,
                                       ),
                                     ),
-                                  );
-                                },
-                              ),
+                                  ),
+                                );
+                              },
                             );
                           } else {
                             return Container();
