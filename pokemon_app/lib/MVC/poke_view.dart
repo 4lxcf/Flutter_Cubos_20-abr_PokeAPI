@@ -39,12 +39,16 @@ class _PokeViewState extends State<PokeView> {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: <Color>[
-                    snapshot.data.colorMap['${snapshot.data.type2}'] != null
-                        ? snapshot.data.colorMap['${snapshot.data.type2}']
+                    snapshot.data.colorMap[
+                                '${snapshot.data.typeList[1].name}'] !=
+                            null
+                        ? snapshot
+                            .data.colorMap['${snapshot.data.typeList[1].name}']
                             .withOpacity(0.8)
-                        : snapshot.data.colorMap['${snapshot.data.type1}']
+                        : snapshot
+                            .data.colorMap['${snapshot.data.typeList[0].name}']
                             .withOpacity(0.7),
-                    snapshot.data.colorMap['${snapshot.data.type1}']
+                    snapshot.data.colorMap['${snapshot.data.typeList[0].name}']
                         .withOpacity(0.8),
                   ],
                   begin: Alignment.bottomLeft,
@@ -120,8 +124,8 @@ class _PokeViewState extends State<PokeView> {
                                 height: 25.0,
                                 width: 58.0,
                                 decoration: BoxDecoration(
-                                  color: snapshot
-                                      .data.colorMap['${snapshot.data.type1}'],
+                                  color: snapshot.data.colorMap[
+                                      '${snapshot.data.typeList[0].name}'],
                                   borderRadius: BorderRadius.circular(8.0),
                                   border: Border.all(
                                     width: 1.5,
@@ -137,7 +141,8 @@ class _PokeViewState extends State<PokeView> {
                                   ],
                                 ),
                                 child: Text(
-                                  '${snapshot.data.type1}'.toUpperCase(),
+                                  '${snapshot.data.typeList[0].name}'
+                                      .toUpperCase(),
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -145,15 +150,15 @@ class _PokeViewState extends State<PokeView> {
                                   ),
                                 ),
                               ),
-                              snapshot.data.type2 != null
+                              snapshot.data.typeList[1].name != null
                                   ? Container(
                                       margin: EdgeInsets.all(5.0),
                                       alignment: Alignment.center,
                                       height: 25.0,
                                       width: 58.0,
                                       decoration: BoxDecoration(
-                                        color: snapshot.data
-                                            .colorMap['${snapshot.data.type2}'],
+                                        color: snapshot.data.colorMap[
+                                            '${snapshot.data.typeList[1].name}'],
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                         border: Border.all(
@@ -170,7 +175,8 @@ class _PokeViewState extends State<PokeView> {
                                         ],
                                       ),
                                       child: Text(
-                                        '${snapshot.data.type2}'.toUpperCase(),
+                                        '${snapshot.data.typeList[1].name}'
+                                            .toUpperCase(),
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
@@ -211,8 +217,8 @@ class _PokeViewState extends State<PokeView> {
                               'HEIGHT',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: snapshot
-                                    .data.colorMap['${snapshot.data.type1}'],
+                                color: snapshot.data.colorMap[
+                                    '${snapshot.data.typeList[0].name}'],
                                 fontSize: 12,
                               ),
                             ),
@@ -233,8 +239,8 @@ class _PokeViewState extends State<PokeView> {
                               'WEIGHT',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: snapshot
-                                    .data.colorMap['${snapshot.data.type1}'],
+                                color: snapshot.data.colorMap[
+                                    '${snapshot.data.typeList[0].name}'],
                                 fontSize: 12,
                               ),
                             ),
@@ -255,8 +261,8 @@ class _PokeViewState extends State<PokeView> {
                               'BASE EXPERIENCE',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: snapshot
-                                    .data.colorMap['${snapshot.data.type1}'],
+                                color: snapshot.data.colorMap[
+                                    '${snapshot.data.typeList[0].name}'],
                                 fontSize: 12,
                               ),
                             ),
@@ -304,8 +310,8 @@ class _PokeViewState extends State<PokeView> {
                               style: ButtonStyle(
                                 backgroundColor: activeButton == 'stats'
                                     ? MaterialStateProperty.all<Color>(snapshot
-                                        .data
-                                        .colorMap['${snapshot.data.type1}'])
+                                            .data.colorMap[
+                                        '${snapshot.data.typeList[0].name}'])
                                     : null,
                                 shape: MaterialStateProperty.all(
                                   RoundedRectangleBorder(
@@ -333,8 +339,8 @@ class _PokeViewState extends State<PokeView> {
                               style: ButtonStyle(
                                 backgroundColor: activeButton == 'evolutions'
                                     ? MaterialStateProperty.all<Color>(snapshot
-                                        .data
-                                        .colorMap['${snapshot.data.type1}'])
+                                            .data.colorMap[
+                                        '${snapshot.data.typeList[0].name}'])
                                     : null,
                                 shape: MaterialStateProperty.all(
                                   RoundedRectangleBorder(
@@ -362,8 +368,8 @@ class _PokeViewState extends State<PokeView> {
                               style: ButtonStyle(
                                 backgroundColor: activeButton == 'abilities'
                                     ? MaterialStateProperty.all<Color>(snapshot
-                                        .data
-                                        .colorMap['${snapshot.data.type1}'])
+                                            .data.colorMap[
+                                        '${snapshot.data.typeList[0].name}'])
                                     : null,
                                 shape: MaterialStateProperty.all(
                                   RoundedRectangleBorder(
@@ -405,9 +411,9 @@ class _PokeViewState extends State<PokeView> {
                                       snapshot.data.statNameList[index].name],
                                   value: snapshot.data.baseStatList[index],
                                   percentage:
-                                      snapshot.data.baseStatList[index] / 255,
-                                  color: snapshot
-                                      .data.colorMap['${snapshot.data.type1}'],
+                                      (snapshot.data.baseStatList[index] / 255),
+                                  color: snapshot.data.colorMap[
+                                      '${snapshot.data.typeList[0].name}'],
                                 );
                               },
                             );
@@ -424,8 +430,10 @@ class _PokeViewState extends State<PokeView> {
                                   child: Container(
                                     padding: EdgeInsets.all(8.0),
                                     decoration: BoxDecoration(
-                                      color: snapshot.data
-                                          .colorMap['${snapshot.data.type1}']
+                                      color: snapshot
+                                          .data
+                                          .colorMap[
+                                              '${snapshot.data.typeList[0].name}']
                                           .withOpacity(0.9),
                                       borderRadius: BorderRadius.circular(3.0),
                                       boxShadow: [

@@ -3,15 +3,13 @@ import 'package:flutter/material.dart';
 class Pokemon {
   String name;
   String urlImage;
-  String type1;
-  String type2;
-  String hiddenAbility;
   int exp;
   int height;
   int weight;
   int id;
   List<Ability> abilityList;
-  List<Stat> statNameList;
+  List<StatName> statNameList;
+  List<Type> typeList;
   List<int> baseStatList = [];
 
   Map<String, Color> colorMap = {
@@ -42,27 +40,25 @@ class Pokemon {
     height = json['height'];
     weight = json['weight'];
     exp = json['base_experience'];
+    var abilitiesList = json['abilities'] as List;
+    var statsList = json['stats'] as List;
+    var typesList = json['types'] as List;
 
-    var arrayAbilities = json['abilities'] as List;
-    abilityList = arrayAbilities.map((item) {
+    //var baseStatValue = ['base_stat'] as List;
+
+    abilityList = abilitiesList.map((item) {
       return Ability.fromJson(item['ability']);
     }).toList();
 
-    var arrayStat = json['stats'] as List;
-    statNameList = arrayStat.map((item) {
-      return Stat.fromJson(item['stat']);
+    statNameList = statsList.map((item) {
+      return StatName.fromJson(item['stat']);
     }).toList();
 
-    for (int i = 0; i < arrayStat.length; i++) {
-      baseStatList.add(json['stats'][i]['base_stat']);
-    }
+    typeList = typesList.map((item) {
+      return Type.fromJson(item['type']);
+    }).toList();
 
-    if (json['types'].length == 2) {
-      type1 = json['types'][0]['type']['name'];
-      type2 = json['types'][1]['type']['name'];
-    } else {
-      type1 = json['types'][0]['type']['name'];
-    }
+    statsList.forEach((element) => baseStatList.add(element['base_stat']));
   }
 }
 
@@ -76,11 +72,21 @@ class Ability {
   }
 }
 
-class Stat {
+class StatName {
   String name;
   String url;
 
-  Stat.fromJson(Map<String, dynamic> json) {
+  StatName.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    url = json['url'];
+  }
+}
+
+class Type {
+  String name;
+  String url;
+
+  Type.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     url = json['url'];
   }
