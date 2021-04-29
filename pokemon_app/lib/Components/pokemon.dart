@@ -11,6 +11,7 @@ class Pokemon {
   List<StatName> statNameList;
   List<Type> typeList;
   List<int> baseStatList = [];
+  //List<BaseStat> baseStatList = [];
 
   Map<String, Color> colorMap = {
     'bug': Color.fromRGBO(168, 184, 32, 1),
@@ -43,6 +44,10 @@ class Pokemon {
     var abilitiesList = json['abilities'] as List;
     var statsList = json['stats'] as List;
     var typesList = json['types'] as List;
+
+    // baseStatList = statsList.map((item) {
+    //   return BaseStat.fromJson(item);
+    // }).toList();
 
     //var baseStatValue = ['base_stat'] as List;
 
@@ -91,3 +96,11 @@ class Type {
     url = json['url'];
   }
 }
+
+// class BaseStat {
+//   int value;
+
+//   BaseStat.fromJson(Map<String, dynamic> json) {
+//     value = json['base_stat'];
+//   }
+// }
