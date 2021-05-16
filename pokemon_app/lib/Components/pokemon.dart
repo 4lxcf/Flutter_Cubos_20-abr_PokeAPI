@@ -57,10 +57,6 @@ class Pokemon {
     typeList = typesList.map((item) {
       return Type.fromJson(item['type']);
     }).toList();
-
-    typesList.forEach((element) {
-      typeList.add(element);
-    });
   }
 }
 
