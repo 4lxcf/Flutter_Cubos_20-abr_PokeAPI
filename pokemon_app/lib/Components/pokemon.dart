@@ -7,6 +7,8 @@ class Pokemon {
   int height;
   int weight;
   int id;
+  String type0;
+  String type1;
   List<Ability> abilityList;
   List<StatName> statNameList;
   List<Type> typeList;
@@ -40,9 +42,17 @@ class Pokemon {
     height = json['height'];
     weight = json['weight'];
     exp = json['base_experience'];
+
     var abilitiesList = json['abilities'] as List;
     var statsList = json['stats'] as List;
     var typesList = json['types'] as List;
+
+    if (typesList.length == 2) {
+      type0 = json['types'][0]['type']['name'];
+      type1 = json['types'][1]['type']['name'];
+    } else {
+      type0 = json['types'][0]['type']['name'];
+    }
 
     abilityList = abilitiesList.map((item) {
       return Ability.fromJson(item['ability']);
@@ -53,10 +63,6 @@ class Pokemon {
     }).toList();
 
     baseStatList = statsList.map((item) => item['base_stat']).toList();
-
-    typeList = typesList.map((item) {
-      return Type.fromJson(item['type']);
-    }).toList();
   }
 }
 
@@ -75,16 +81,6 @@ class StatName {
   String url;
 
   StatName.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    url = json['url'];
-  }
-}
-
-class Type {
-  String name;
-  String url;
-
-  Type.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     url = json['url'];
   }
