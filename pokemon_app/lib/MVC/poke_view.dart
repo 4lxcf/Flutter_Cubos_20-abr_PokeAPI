@@ -29,10 +29,10 @@ class _PokeViewState extends State<PokeView> {
         centerTitle: true,
         title: Text('Pokemon App'),
       ),
-      body: FutureBuilder<Pokemon>(
-        future: controller.pokemon,
+      body: StreamBuilder<Pokemon>(
+        stream: controller.streamController.stream,
         builder: (_, snapshot) {
-          if (snapshot.connectionState != ConnectionState.done) {
+          if (snapshot.connectionState != ConnectionState.active) {
             return Container();
           } else if (snapshot.hasData) {
             return Container(
