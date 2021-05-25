@@ -35,6 +35,8 @@ class Pokemon {
     'water': Color.fromRGBO(104, 144, 240, 1),
   };
 
+  Pokemon(this.name);
+
   Pokemon.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     urlImage = json['sprites']['other']['official-artwork']['front_default'];
