@@ -7,11 +7,12 @@ class Pokemon {
   int height;
   int weight;
   int id;
+  String type0;
+  String type1;
   List<Ability> abilityList;
   List<StatName> statNameList;
   List<Type> typeList;
-  List<int> baseStatList = [];
-  //List<BaseStat> baseStatList = [];
+  List<dynamic> baseStatList = [];
 
   Map<String, Color> colorMap = {
     'bug': Color.fromRGBO(168, 184, 32, 1),
@@ -34,6 +35,8 @@ class Pokemon {
     'water': Color.fromRGBO(104, 144, 240, 1),
   };
 
+  Pokemon(this.name);
+
   Pokemon.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     urlImage = json['sprites']['other']['official-artwork']['front_default'];
@@ -41,15 +44,17 @@ class Pokemon {
     height = json['height'];
     weight = json['weight'];
     exp = json['base_experience'];
+
     var abilitiesList = json['abilities'] as List;
     var statsList = json['stats'] as List;
     var typesList = json['types'] as List;
 
-    // baseStatList = statsList.map((item) {
-    //   return BaseStat.fromJson(item);
-    // }).toList();
-
-    //var baseStatValue = ['base_stat'] as List;
+    if (typesList.length == 2) {
+      type0 = json['types'][0]['type']['name'];
+      type1 = json['types'][1]['type']['name'];
+    } else {
+      type0 = json['types'][0]['type']['name'];
+    }
 
     abilityList = abilitiesList.map((item) {
       return Ability.fromJson(item['ability']);
@@ -59,11 +64,7 @@ class Pokemon {
       return StatName.fromJson(item['stat']);
     }).toList();
 
-    typeList = typesList.map((item) {
-      return Type.fromJson(item['type']);
-    }).toList();
-
-    statsList.forEach((element) => baseStatList.add(element['base_stat']));
+    baseStatList = statsList.map((item) => item['base_stat']).toList();
   }
 }
 
@@ -86,21 +87,3 @@ class StatName {
     url = json['url'];
   }
 }
-
-class Type {
-  String name;
-  String url;
-
-  Type.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    url = json['url'];
-  }
-}
-
-// class BaseStat {
-//   int value;
-
-//   BaseStat.fromJson(Map<String, dynamic> json) {
-//     value = json['base_stat'];
-//   }
-// }

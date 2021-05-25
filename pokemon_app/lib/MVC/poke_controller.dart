@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:pokemon_app/Components/pokemon.dart';
@@ -9,18 +10,11 @@ class PokeController {
 
   Future<Pokemon> get pokemon => model.pokemon;
 
+  StreamController<Pokemon> streamController = StreamController();
+
   loadPokemon() {
     number = Random().nextInt(987);
     model.fetchPokemon(number);
-  }
-
-  nextPokemon() {
-    number++;
-    model.fetchPokemon(number);
-  }
-
-  previousPokemon() {
-    number--;
-    model.fetchPokemon(number);
+    model.pokemon.then((value) => streamController.add(value));
   }
 }
